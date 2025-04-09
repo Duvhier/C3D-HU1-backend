@@ -5,7 +5,8 @@ import {
   getReservations,
   getReservationById,
   updateReservation,
-  deleteReservation
+  deleteReservation,
+  deleteAllReservations
 } from "../controller/reservationController";
 
 const router = Router();
@@ -15,5 +16,6 @@ router.get("/", getReservations);
 router.get("/:id", getReservationById);
 router.put("/:id", updateReservation);
 router.delete("/:id", deleteReservation);
+router.delete("/all", deleteAllReservations);
 
 export default router;

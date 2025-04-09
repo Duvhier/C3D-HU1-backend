@@ -15,7 +15,7 @@ app.use("/api/spaces", spaceRoutes);
 app.use("/api/reservations", reservationRoutes);
 
 AppDataSource.initialize().then(() => {
-  app.listen(3000, () => {
+  app.listen(3000, '0.0.0.0', () => {
     console.log("🚀 Server running on http://localhost:3000");
   });
 });
