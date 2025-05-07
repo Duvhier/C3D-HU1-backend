@@ -6,28 +6,50 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function loadBooks() {
-    try {
-      const response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const books = await response.json();
-      console.log('Books loaded:', books); // Verifica los libros cargados
-  
-      const bookList = document.getElementById('bookList');
-      bookList.innerHTML = '';
-  
-      books.forEach(book => {
-        const li = document.createElement('li');
-        li.textContent = `${book.title} by ${book.author} (${book.publishedDate}) - Genre: ${book.genre}`;
-        li.appendChild(createEditButton(book.id));
-        li.appendChild(createDeleteButton(book.id));
-        bookList.appendChild(li);
-      });
-    } catch (error) {
-      console.error('Error loading books:', error);
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const books = await response.json();
+    console.log('Books loaded:', books);
+
+    const bookList = document.getElementById('bookList');
+    bookList.innerHTML = '';
+
+    books.forEach(book => {
+      const li = document.createElement('li');
+      li.className = 'book-item';
+
+      const icon = document.createElement('i');
+      icon.className = 'fas fa-book book-icon';
+
+      const span = document.createElement('span');
+      span.textContent = `${book.title} by ${book.author} (${book.publishedDate}) - Genre: ${book.genre}`;
+
+      const buttonsContainer = document.createElement('div');
+      buttonsContainer.className = 'buttons-container';
+
+      const editBtn = createEditButton(book.id);
+      editBtn.classList.add('edit-button');
+
+      const deleteBtn = createDeleteButton(book.id);
+      deleteBtn.classList.add('delete-button');
+
+      buttonsContainer.appendChild(editBtn);
+      buttonsContainer.appendChild(deleteBtn);
+
+      li.appendChild(icon);
+      li.appendChild(span);
+      li.appendChild(buttonsContainer);
+
+      bookList.appendChild(li);
+    });
+  } catch (error) {
+    console.error('Error loading books:', error);
   }
+}
+
 function createEditButton(bookId) {
   const button = document.createElement('button');
   button.textContent = 'Edit';

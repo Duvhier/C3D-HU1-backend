@@ -1,77 +1,196 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #eef2f3;
+    color: #333;
 }
 
 .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
 }
 
-header {
-    background: #35424a;
-    color: #ffffff;
-    padding: 10px 0;
+h1,
+h2 {
     text-align: center;
-}
-
-h1 {
-    margin: 0;
+    color: #2c3e50;
 }
 
 form {
-    background: #ffffff;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
 }
 
 form input[type="text"],
-form input[type="number"],
+form input[type="date"],
 form button {
-    padding: 10px;
-    margin: 5px 0;
-    width: 100%;
+    width: 95%;
+    padding: 12px 15px;
+    margin: 10px 0;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+form input:focus {
+    border-color: #3498db;
+    outline: none;
 }
 
 form button {
-    background: #35424a;
-    color: #ffffff;
+    background: #3498db;
+    color: white;
     border: none;
+    font-weight: 600;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 form button:hover {
-    background: #45a049;
+    background: #2980b9;
 }
 
-.book-list {
+ul#bookList {
     list-style: none;
     padding: 0;
 }
 
-.book-list li {
-    background: #ffffff;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+ul#bookList li {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-left: 5px solid #3498db;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.book-list li button {
+ul#bookList li span {
+    flex: 1;
+    font-size: 16px;
+}
+
+ul#bookList li button {
     background: #e74c3c;
-    color: #ffffff;
     border: none;
-    padding: 5px 10px;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.book-list li button:hover {
+ul#bookList li button:hover {
     background: #c0392b;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    form {
+        padding: 20px;
+    }
+
+    ul#bookList li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    ul#bookList li button {
+        margin-top: 10px;
+        width: 100%;
+    }
+}
+
+.book-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.book-icon {
+    color: #3498db;
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.book-item span {
+    flex: 1;
+    font-size: 16px;
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button,
+.delete-button {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+.edit-button {
+    background-color: #f1c40f;
+    color: white;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #d4ac0d;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    display:flex;
+    width: 100%;
+    background: transparent;
+    margin: 0 auto 10px;
+    align-items: center;
+}
+
+.title-with-logo {
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+.title-with-logo .logo {
+    margin: 0;
+    width: 100px;
+    height: auto;
+    display: block;
+    background: transparent;
+    margin: 0 auto 10px;
+    align-items: center;
 }

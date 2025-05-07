@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book CRUD Application</title>
+    <title>Biblioteca Digital C3D</title>
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
-    <div class="container">
-        <h1>Book CRUD Application</h1>
+    <div class="container title-with-logo">
+        <img src="logo.png" alt="C3D Team Logo" class="logo">
+        <h1>Book C3D App</h1>
         <form id="bookForm">
             <input type="hidden" id="id" name="id">
             <input type="text" id="title" name="title" placeholder="Book Title" required>
@@ -17,10 +23,11 @@
             <input type="date" id="publishedDate" name="publishedDate" required>
             <input type="text" id="genre" name="genre" placeholder="Genre" required>
             <button type="submit">Add Book</button>
-          </form>
+        </form>
         <h2>Book List</h2>
         <ul id="bookList"></ul>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
