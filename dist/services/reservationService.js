@@ -12,14 +12,19 @@ class ReservationService {
             return await reservationRepo.save(reservation);
         }
         catch (error) {
+            console.error("Error al crear la reserva:", error);
             throw new errorHandler_1.AppError("Error al crear la reserva", 400);
         }
     }
     static async getAll() {
         try {
-            return await reservationRepo.find({ relations: ["user", "space"] });
+            return await reservationRepo.find({
+                relations: ["user", "space"],
+                order: { id: "ASC" } // Opcional: ordenar resultados
+            });
         }
         catch (error) {
+            console.error("Error al obtener todas las reservas:", error);
             throw new errorHandler_1.AppError("Error al obtener reservas", 500);
         }
     }
@@ -29,11 +34,13 @@ class ReservationService {
                 where: { id },
                 relations: ["user", "space"]
             });
-            if (!reservation)
+            if (!reservation) {
                 throw new errorHandler_1.AppError("Reserva no encontrada", 404);
+            }
             return reservation;
         }
         catch (error) {
+            console.error(`Error al buscar reserva con ID ${id}:`, error);
             if (error instanceof errorHandler_1.AppError)
                 throw error;
             throw new errorHandler_1.AppError("Error al buscar reserva", 500);
@@ -41,13 +48,15 @@ class ReservationService {
     }
     static async update(id, updateData) {
         try {
-            await reservationRepo.update(id, updateData);
+            const updateResult = await reservationRepo.update(id, updateData);
+            if (updateResult.affected === 0) {
+                throw new errorHandler_1.AppError("Reserva no encontrada para actualizar", 404);
+            }
             const updated = await reservationRepo.findOne({ where: { id } });
-            if (!updated)
-                throw new errorHandler_1.AppError("Reserva no encontrada", 404);
             return updated;
         }
         catch (error) {
+            console.error(`Error al actualizar la reserva con ID ${id}:`, error);
             if (error instanceof errorHandler_1.AppError)
                 throw error;
             throw new errorHandler_1.AppError("Error al actualizar reserva", 500);
@@ -59,9 +68,10 @@ class ReservationService {
             if (result.affected === 0) {
                 throw new errorHandler_1.AppError("Reserva no encontrada", 404);
             }
-            return true;
+            return { message: "Reserva eliminada correctamente" };
         }
         catch (error) {
+            console.error(`Error al eliminar reserva con ID ${id}:`, error);
             if (error instanceof errorHandler_1.AppError)
                 throw error;
             throw new errorHandler_1.AppError("Error al eliminar reserva", 500);
