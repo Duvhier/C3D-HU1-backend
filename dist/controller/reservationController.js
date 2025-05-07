@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteReservation = exports.updateReservation = exports.getReservationById = exports.getReservations = exports.createReservation = void 0;
+exports.deleteAllReservations = exports.deleteReservation = exports.updateReservation = exports.getReservationById = exports.getReservations = exports.createReservation = void 0;
 const data_sources_1 = require("../data-sources");
 const Reservation_1 = require("../entity/Reservation");
 const User_1 = require("../entity/User");
@@ -23,8 +23,15 @@ const createReservation = async (req, res) => {
             startTime,
             endTime
         });
-        const result = await reservationRepo.save(reservation);
-        res.status(201).json(result);
+        const saved = await reservationRepo.save(reservation);
+        res.status(201).json({
+            id: saved.id,
+            user: user.fullName,
+            space: space.name,
+            startTime: saved.startTime,
+            endTime: saved.endTime,
+            createdAt: saved.createdAt
+        });
     }
     catch (error) {
         res.status(500).json({ message: "Error al crear la reserva", error });
@@ -35,7 +42,15 @@ exports.createReservation = createReservation;
 const getReservations = async (_, res) => {
     try {
         const reservations = await reservationRepo.find({ relations: ["user", "space"] });
-        res.json(reservations);
+        const simplified = reservations.map(reservation => ({
+            id: reservation.id,
+            user: reservation.user.fullName,
+            space: reservation.space.name,
+            startTime: reservation.startTime,
+            endTime: reservation.endTime,
+            createdAt: reservation.createdAt
+        }));
+        res.json(simplified);
     }
     catch (error) {
         res.status(500).json({ message: "Error al obtener reservas", error });
@@ -49,7 +64,18 @@ const getReservationById = async (req, res) => {
             where: { id: Number(req.params.id) },
             relations: ["user", "space"]
         });
-        reservation ? res.json(reservation) : res.status(404).json({ message: "Reserva no encontrada" });
+        if (!reservation) {
+            return res.status(404).json({ message: "Reserva no encontrada" });
+        }
+        const simplified = {
+            id: reservation.id,
+            user: reservation.user.fullName,
+            space: reservation.space.name,
+            startTime: reservation.startTime,
+            endTime: reservation.endTime,
+            createdAt: reservation.createdAt
+        };
+        res.json(simplified);
     }
     catch (error) {
         res.status(500).json({ message: "Error al buscar reserva", error });
@@ -79,3 +105,13 @@ const deleteReservation = async (req, res) => {
     }
 };
 exports.deleteReservation = deleteReservation;
+const deleteAllReservations = async (_, res) => {
+    try {
+        await reservationRepo.clear(); // elimina todos los registros
+        res.json({ message: "Todas las reservas han sido eliminadas." });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Error al eliminar reservas", error });
+    }
+};
+exports.deleteAllReservations = deleteAllReservations;

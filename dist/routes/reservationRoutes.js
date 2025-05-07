@@ -9,4 +9,5 @@ router.get("/", reservationController_1.getReservations);
 router.get("/:id", reservationController_1.getReservationById);
 router.put("/:id", reservationController_1.updateReservation);
 router.delete("/:id", reservationController_1.deleteReservation);
+router.delete("/all", reservationController_1.deleteAllReservations);
 exports.default = router;
