@@ -8,6 +8,7 @@ const bookRepository = AppDataSource.getRepository(Book);
 export const getBooks = async (req: Request, res: Response) => {
   try {
     const books = await bookRepository.find();
+    console.log('Books fetched:', books); // Verifica los libros obtenidos
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener libros", error });
@@ -33,14 +34,20 @@ export const createBook = async (req: Request, res: Response) => {
   try {
     const { title, author, publishedDate, genre } = req.body;
 
+    console.log('Request body:', req.body); // Verifica los datos recibidos
+
     if (!title || !author || !publishedDate || !genre) {
       return res.status(400).json({ message: "Todos los campos son requeridos" });
     }
 
     const newBook = bookRepository.create({ title, author, publishedDate, genre });
     await bookRepository.save(newBook);
+
+    console.log('Book saved:', newBook); // Verifica el libro guardado
+
     res.status(201).json(newBook);
   } catch (error) {
+    console.error('Error creating book:', error);
     res.status(500).json({ message: "Error al crear el libro", error });
   }
 };
