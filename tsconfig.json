@@ -11,6 +11,6 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "public"],
+  "include": ["src/**/*", "api/**/*", "public"],
   "exclude": ["node_modules"]
 }
